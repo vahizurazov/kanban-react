@@ -1,0 +1,8 @@
+{
+  "presets": ["@babel/preset-flow"],
+  "env": {
+    "development": {
+      "presets": [["@babel/preset-react", { "development": true }]]
+    }
+  }
+}
