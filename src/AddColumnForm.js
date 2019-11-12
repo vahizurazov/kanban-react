@@ -1,6 +1,10 @@
+//@flow
 import React from "react";
 
-export default class AddColumnForm extends React.Component {
+export default class AddColumnForm extends React.Component<
+  {},
+  { editing: boolean }
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,20 +34,20 @@ export default class AddColumnForm extends React.Component {
     if (!this.state.editing) {
       return (
         <div className="open-add-button" onClick={() => this.setEditing(true)}>
-          <a href="#">Add task</a>
+          <a href="#">Add column</a>
         </div>
       );
     }
     return (
-      <form className="card add-task-form" onSubmit={e => this.onSubmit(e)}>
+      <form className="add-column-form" onSubmit={e => this.onSubmit(e)}>
         <input
           type="text"
-          className="task-input"
+          className="column-input"
           ref={input => (this.textInput = input)}
-          aria-label="Add a task"
+          aria-label="Add a column"
         />
         <div>
-          <button className="button add-button">Add Task</button>
+          <button className="button add-button">Add column</button>
           <button
             className="button cancel-button"
             onClick={() => this.setEditing(false)}

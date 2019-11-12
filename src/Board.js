@@ -1,41 +1,41 @@
+//@flow
 import * as React from "react";
 import "./Board.css";
 import AddColumnForm from "./AddColumnForm";
 import AddCardForm from "./AddCardForm";
 
-type State = {
-  boardColumn: Object
+State: type State = {
+  boardColumn: any,
+  colunmTitle: string,
+  id: string
 };
-//@flow
 class Board extends React.Component<State> {
-  constructor(props) {
-    super(props);
+  state = {
+    boardColumn: [
+      {
+        colunmTitle: "Backlog",
+        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+        card: []
+      },
+      {
+        colunmTitle: "In Dev",
+        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+        card: []
+      },
+      {
+        colunmTitle: "Done",
+        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+        card: []
+      }
+    ]
+  };
 
-    this.state = {
-      boardColumn: [
-        {
-          colunmTitle: "Backlog",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-          card: []
-        },
-        {
-          colunmTitle: "In Dev",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-          card: []
-        },
-        {
-          colunmTitle: "Done",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-          card: []
-        }
-      ]
-    };
-  }
   addColumn = colunmTitle => {
     this.setState(prevState => ({
       boardColumn: prevState.boardColumn.concat({
         colunmTitle,
-        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
+        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+        card: []
       })
     }));
   };
@@ -46,16 +46,35 @@ class Board extends React.Component<State> {
   };
 
   addCard = (cardTitle, cardDescription, id) => {
-    console.log("cardTitle", cardTitle);
-    console.log("cardDescription", cardDescription);
-    console.log("id", id);
-
     const cardId = {
       cardTitle,
-      cardDescription
+      cardDescription,
+      id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
     };
+    this.state.boardColumn.map((item, index) => {
+      // console.log("item", item);
+      // console.log("index", index);
+      if (item.id === id) {
+        this.setState(prevState =>
+          prevState.boardColumn[index].card.push(cardId)
+        );
+      }
+    });
+  };
+  removeCard = (columnId, cardId) => {
+    console.log(columnId);
 
-    this.setState({});
+    this.state.boardColumn.map((item, index) => {
+      if (item.id === columnId) {
+        this.setState(prevState => {
+          // console.log('prevState.boardColumn[index].card.filter(el=>)',prevState.boardColumn[index].card.filter(el=>));
+          // prevState.boardColumn[index].card.filter(el =>
+          //   console.log(el.id !== cardId)
+          // );
+          prevState.boardColumn[index].card.filter(el => el.id !== cardId);
+        });
+      }
+    });
   };
 
   // addTaskCard(taskText, listNumber) {
@@ -85,6 +104,20 @@ class Board extends React.Component<State> {
           className="close"
           onClick={() => this.removeColumn(list.id)}
         ></span>
+        <ul className="card-list">
+          {list.card.map(el => (
+            <li className="card" key={el.id}>
+              <p>Title: {el.cardTitle}</p>
+              <p>Description: {el.cardDescription}</p>
+
+              <span
+                href="#"
+                className="remove-card"
+                onClick={() => this.removeCard(list.id, el.id)}
+              ></span>
+            </li>
+          ))}
+        </ul>
         <AddCardForm
           onAdd={(cardTitle, cardDescription, id) =>
             this.addCard(cardTitle, cardDescription, id)
@@ -96,7 +129,6 @@ class Board extends React.Component<State> {
 
     return (
       <div className="board">
-        {/* <button onClick={() => this.addColumn()}>Add column</button> */}
         <AddColumnForm
           onAdd={(colunmTitle, id) => this.addColumn(colunmTitle, id)}
         />

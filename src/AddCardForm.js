@@ -1,5 +1,5 @@
 import React from "react";
-//f
+
 export default class AddCardForm extends React.Component {
   constructor(props) {
     super(props);
@@ -12,8 +12,8 @@ export default class AddCardForm extends React.Component {
     event.preventDefault();
     const cardTitle = this.textInput.value.trim();
     const cardDescription = this.textInputTwo.value.trim();
-    console.log("taskText", cardTitle);
-    console.log("this.props", this.props);
+    // console.log("taskText", cardTitle);
+    // console.log("this.props", this.props);
 
     if (cardTitle && this.props.onAdd) {
       this.props.onAdd(cardTitle, cardDescription, this.props.id);
@@ -38,21 +38,26 @@ export default class AddCardForm extends React.Component {
       );
     }
     return (
-      <form className="card add-task-form" onSubmit={e => this.onSubmit(e)}>
+      <form className="card add-card-form" onSubmit={e => this.onSubmit(e)}>
         <input
           type="text"
-          className="task-input"
+          className="card-input"
           ref={input => (this.textInput = input)}
           placeholder="Title Card"
         />
-        <input
-          type="text"
-          className="task-input"
+        <textarea
+          className="card-input"
           ref={input => (this.textInputTwo = input)}
           placeholder="Description Card"
-        />
+        ></textarea>
+        {/* <input
+          type="text"
+          className="card-input"
+          ref={input => (this.textInputTwo = input)}
+          placeholder="Description Card"
+        /> */}
         <div>
-          <button className="button add-button">Add Task</button>
+          <button className="button add-button">Add card</button>
           <button
             className="button cancel-button"
             onClick={() => this.setEditing(false)}
