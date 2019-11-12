@@ -6,7 +6,7 @@ import AddCardForm from "./AddCardForm";
 type State = {
   boardColumn: Object
 };
-
+//@flow
 class Board extends React.Component<State> {
   constructor(props) {
     super(props);
@@ -55,9 +55,7 @@ class Board extends React.Component<State> {
       cardDescription
     };
 
-    this.setState({
-      card: cardId
-    });
+    this.setState({});
   };
 
   // addTaskCard(taskText, listNumber) {
