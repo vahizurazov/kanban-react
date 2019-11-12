@@ -52,8 +52,6 @@ class Board extends React.Component<State> {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
     };
     this.state.boardColumn.map((item, index) => {
-      // console.log("item", item);
-      // console.log("index", index);
       if (item.id === id) {
         this.setState(prevState =>
           prevState.boardColumn[index].card.push(cardId)
@@ -62,16 +60,15 @@ class Board extends React.Component<State> {
     });
   };
   removeCard = (columnId, cardId) => {
-    console.log(columnId);
-
+    this.setState({});
     this.state.boardColumn.map((item, index) => {
       if (item.id === columnId) {
         this.setState(prevState => {
-          // console.log('prevState.boardColumn[index].card.filter(el=>)',prevState.boardColumn[index].card.filter(el=>));
-          // prevState.boardColumn[index].card.filter(el =>
-          //   console.log(el.id !== cardId)
-          // );
-          prevState.boardColumn[index].card.filter(el => el.id !== cardId);
+          prevState.boardColumn[index].card.map((el, ind) => {
+            if (el.id === cardId) {
+              prevState.boardColumn[index].card.splice(ind, 1);
+            }
+          });
         });
       }
     });
@@ -94,11 +91,11 @@ class Board extends React.Component<State> {
   // }
 
   render() {
-    console.log("STATE", this.state);
+    // console.log("STATE", this.state);
 
     const boardColumn = this.state.boardColumn.map(list => (
       <li className={`boardColumn-wrapper ${list.id}`} key={list.id}>
-        {list.colunmTitle}
+        <h4>{list.colunmTitle}</h4>
         <span
           href="#"
           className="close"

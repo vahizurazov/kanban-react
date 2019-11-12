@@ -26,10 +26,21 @@
 }
 .card {
   list-style: none;
-  width: 100%;
+  background-color: darkgrey;
   border: 2px dashed #2398ef;
   margin-bottom: 10px;
   position: relative;
+}
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.card-input {
+  margin-bottom: 10px;
+}
+.add-button {
+  margin-right: 10px;
 }
 
 .card .remove-card {
