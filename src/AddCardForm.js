@@ -50,12 +50,6 @@ export default class AddCardForm extends React.Component {
           ref={input => (this.textInputTwo = input)}
           placeholder="Description Card"
         ></textarea>
-        {/* <input
-          type="text"
-          className="card-input"
-          ref={input => (this.textInputTwo = input)}
-          placeholder="Description Card"
-        /> */}
         <div>
           <button className="button add-button">Add card</button>
           <button
