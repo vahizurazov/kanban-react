@@ -3,6 +3,7 @@ import * as React from "react";
 import "./Board.css";
 import AddColumnForm from "./AddColumnForm";
 import AddCardForm from "./AddCardForm";
+import Dragula from "react-dragula";
 
 State: type State = {
   boardColumn: any,
@@ -95,6 +96,19 @@ class Board extends React.Component<State> {
         ]
       }
     ]
+  };
+
+  dragulaDecorator = componentBackingInstance => {
+    console.log("componentBackingInstance", componentBackingInstance);
+    if (componentBackingInstance) {
+      let options = {
+        copy: false,
+        copySortSource: false,
+        direction: "horizontal"
+      };
+
+      Dragula([componentBackingInstance], options);
+    }
   };
 
   addColumn = colunmTitle => {
@@ -196,7 +210,9 @@ class Board extends React.Component<State> {
         <AddColumnForm
           onAdd={(colunmTitle, id) => this.addColumn(colunmTitle, id)}
         />
-        <ul className="boardColumn">{boardColumn}</ul>
+        <ul className="boardColumn" ref={this.dragulaDecorator}>
+          {boardColumn}
+        </ul>
       </div>
     );
   }

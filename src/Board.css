@@ -1,3 +1,7 @@
+.gu-mirror {
+  /* display: none; */
+}
+
 .board {
   text-align: center;
 }
@@ -30,6 +34,7 @@
   border: 2px dashed #2398ef;
   margin-bottom: 10px;
   position: relative;
+  padding: 10px;
 }
 .add-card-form {
   display: flex;
