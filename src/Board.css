@@ -1,5 +1,24 @@
 .gu-mirror {
-  /* display: none; */
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
 }
 
 .board {
@@ -12,17 +31,29 @@
   padding: 0;
   margin: 0;
 }
+.wrapper-for-list {
+  min-width: 200px;
+  min-height: 300px;
+  margin: 0 5px 5px;
+}
+.wrap-title {
+  position: relative;
+}
+.wrapper-for-list h4 {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  margin-bottom: 0;
+}
 .boardColumn .boardColumn-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  margin: 10px;
   border: 1px solid black;
   list-style: none;
   padding: 10px;
-  position: relative;
+  min-height: 300px;
 }
+
 .card-list {
   padding: 0;
   display: flex;
@@ -53,7 +84,7 @@
   right: 0px;
   top: 0px;
   width: 27px;
-  height: 32px;
+  height: 27px;
   opacity: 0.3;
 }
 .card .remove-card:hover {
@@ -62,9 +93,8 @@
 .card .remove-card:before,
 .card .remove-card:after {
   position: absolute;
-  left: 15px;
   content: " ";
-  height: 20px;
+  height: 23px;
   width: 3px;
   background-color: RED;
 }

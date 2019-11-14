@@ -98,19 +98,6 @@ class Board extends React.Component<State> {
     ]
   };
 
-  dragulaDecorator = componentBackingInstance => {
-    console.log("componentBackingInstance", componentBackingInstance);
-    if (componentBackingInstance) {
-      let options = {
-        copy: false,
-        copySortSource: false,
-        direction: "horizontal"
-      };
-
-      Dragula([componentBackingInstance], options);
-    }
-  };
-
   addColumn = colunmTitle => {
     this.setState(prevState => ({
       boardColumn: prevState.boardColumn.concat({
@@ -124,6 +111,7 @@ class Board extends React.Component<State> {
     this.setState(prevState => ({
       boardColumn: prevState.boardColumn.filter(item => item.id !== id)
     }));
+    this.dragulaDecorator();
   };
 
   addCard = (cardTitle, cardDescription, id) => {
@@ -170,49 +158,74 @@ class Board extends React.Component<State> {
   //     lists: parsedLS
   //   });
   // }
+  dragulaDecorator = () => {
+    let options = {
+      copy: false,
+      copySortSource: false,
+      direction: "horizontal",
+      isContainer: function(el) {
+        // console.log(el);
+
+        return el.classList.contains("boardColumn-wrapper");
+      }
+      // removeOnSpill: true
+    };
+    const arr = [];
+    const classId = this.state.boardColumn.map(item => {
+      // console.log(document.querySelector(`#${item.id}`));
+
+      arr.push(document.querySelector(`#${item.id}`));
+    });
+    console.log("document.getElementsByClassName(classNameId)", options);
+
+    Dragula(arr, options);
+  };
 
   render() {
     console.log("STATE", this.state);
 
-    const boardColumn = this.state.boardColumn.map(list => (
-      <li className={`boardColumn-wrapper ${list.id}`} key={list.id}>
-        <h4>{list.colunmTitle}</h4>
-        <span
-          href="#"
-          className="close"
-          onClick={() => this.removeColumn(list.id)}
-        ></span>
-        <ul className="card-list">
-          {list.card.map(el => (
-            <li className="card" key={el.id}>
-              <p>Title: {el.cardTitle}</p>
-              <p>Description: {el.cardDescription}</p>
-
-              <span
-                href="#"
-                className="remove-card"
-                onClick={() => this.removeCard(list.id, el.id)}
-              ></span>
-            </li>
-          ))}
-        </ul>
-        <AddCardForm
-          onAdd={(cardTitle, cardDescription, id) =>
-            this.addCard(cardTitle, cardDescription, id)
-          }
-          id={list.id}
-        />
-      </li>
-    ));
+    // const boardColumn = ;
 
     return (
-      <div className="board">
+      <div className="board" id="boardId" ref={this.dragulaDecorator}>
         <AddColumnForm
           onAdd={(colunmTitle, id) => this.addColumn(colunmTitle, id)}
         />
-        <ul className="boardColumn" ref={this.dragulaDecorator}>
-          {boardColumn}
-        </ul>
+        <div className="boardColumn">
+          {this.state.boardColumn.map(list => (
+            <div className="wrapper-for-list" key={list.id}>
+              <div className="wrap-title">
+                <h4>{list.colunmTitle}</h4>
+                <span
+                  href="#"
+                  className="close"
+                  onClick={() => this.removeColumn(list.id)}
+                ></span>
+              </div>
+
+              <div className={`boardColumn-wrapper`} id={`${list.id}`}>
+                {list.card.map(el => (
+                  <div className="card" key={el.id}>
+                    <p>Title: {el.cardTitle}</p>
+                    <p>Description: {el.cardDescription}</p>
+
+                    <span
+                      href="#"
+                      className="remove-card"
+                      onClick={() => this.removeCard(list.id, el.id)}
+                    ></span>
+                  </div>
+                ))}
+              </div>
+              <AddCardForm
+                onAdd={(cardTitle, cardDescription, id) =>
+                  this.addCard(cardTitle, cardDescription, id)
+                }
+                id={list.id}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
