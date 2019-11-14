@@ -5,6 +5,8 @@ import AddColumnForm from "./AddColumnForm";
 import AddCardForm from "./AddCardForm";
 import Dragula from "react-dragula";
 
+import { subscribeToTimer } from "./api";
+
 State: type State = {
   boardColumn: any,
   colunmTitle: string,
@@ -95,8 +97,14 @@ class Board extends React.Component<State> {
           }
         ]
       }
-    ]
+    ],
+    timestamp: "no timestamp yet"
   };
+
+  subscribeToTimer = (err, timestamp) =>
+    this.setState({
+      timestamp
+    });
 
   addColumn = colunmTitle => {
     this.setState(prevState => ({
@@ -143,21 +151,6 @@ class Board extends React.Component<State> {
     });
   };
 
-  // addTaskCard(taskText, listNumber) {
-  //   console.log("taskText", taskText);
-  //   console.log("listNumber", listNumber);
-
-  //   const newTask = {
-  //     taskText,
-  //     listNumber,
-  //     timeId: new Date().valueOf()
-  //   };
-
-  //   //sync state and localStorage
-  //   this.setState({
-  //     lists: parsedLS
-  //   });
-  // }
   dragulaDecorator = () => {
     let options = {
       copy: false,
@@ -171,12 +164,9 @@ class Board extends React.Component<State> {
       // removeOnSpill: true
     };
     const arr = [];
-    const classId = this.state.boardColumn.map(item => {
-      // console.log(document.querySelector(`#${item.id}`));
-
+    this.state.boardColumn.map(item => {
       arr.push(document.querySelector(`#${item.id}`));
     });
-    console.log("document.getElementsByClassName(classNameId)", options);
 
     Dragula(arr, options);
   };
@@ -226,6 +216,8 @@ class Board extends React.Component<State> {
             </div>
           ))}
         </div>
+
+        <div className="time">{this.state.timestamp}</div>
       </div>
     );
   }
