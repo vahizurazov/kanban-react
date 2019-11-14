@@ -4,8 +4,8 @@ import "./Board.css";
 import AddColumnForm from "./AddColumnForm";
 import AddCardForm from "./AddCardForm";
 import Dragula from "react-dragula";
-
-import { subscribeToTimer } from "./api";
+import io from 'socket.io-client';
+// import { subscribeToTimer } from './server/api';
 
 State: type State = {
   boardColumn: any,
@@ -14,92 +14,105 @@ State: type State = {
 };
 class Board extends React.Component<State> {
   state = {
-    boardColumn: [
-      {
-        colunmTitle: "Backlog",
-        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-        card: [
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "First card",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          },
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "Second card",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          },
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "Third card",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          }
-        ]
-      },
-      {
-        colunmTitle: "In Dev",
-        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-        card: [
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "First card in DEV",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          },
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "Second card in DEV",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          }
-        ]
-      },
-      {
-        colunmTitle: "Done",
-        id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-        card: [
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "First card DONE",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          },
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "Second card DONE",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          },
-          {
-            cardDescription:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            cardTitle: "Third card DONE",
-            id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-              36
-            )
-          }
-        ]
-      }
-    ],
-    timestamp: "no timestamp yet"
+    // boardColumn: [
+    //   {
+    //     colunmTitle: "Backlog",
+    //     id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+    //     card: [
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "First card",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       },
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "Second card",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       },
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "Third card",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     colunmTitle: "In Dev",
+    //     id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+    //     card: [
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "First card in DEV",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       },
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "Second card in DEV",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     colunmTitle: "Done",
+    //     id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
+    //     card: [
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "First card DONE",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       },
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "Second card DONE",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       },
+    //       {
+    //         cardDescription:
+    //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //         cardTitle: "Third card DONE",
+    //         id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
+    //           36
+    //         )
+    //       }
+    //     ]
+    //   }
+    // ],
+
   };
+
+  componentDidMount () {
+    this.socket = io("http://localhost:8000");
+    this.socket.on('new state', state => {
+      if (JSON.stringify(state) !== JSON.stringify(this.state)) {
+        this.setState({ ...state });
+      }
+    });
+  }
+
+  componentDidUpdate () {
+    this.socket.emit('new state', this.state);
+  }
 
   subscribeToTimer = (err, timestamp) =>
     this.setState({
@@ -173,7 +186,7 @@ class Board extends React.Component<State> {
 
   render() {
     console.log("STATE", this.state);
-
+    if (!this.state.boardColumn) return null;
     // const boardColumn = ;
 
     return (
