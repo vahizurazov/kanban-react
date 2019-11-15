@@ -7,28 +7,19 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       card: [
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "First card",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "111111111111111111",
+          cardTitle: "111111111111111111",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "Second card",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "222222222222222",
+          cardTitle: "222222222222222",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "Third card",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "33333333333333",
+          cardTitle: "33333333333333",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
     },
@@ -37,20 +28,14 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       card: [
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "First card in DEV",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "1 in DEV",
+          cardTitle: "1 in DEV",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "Second card in DEV",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "2 in DEV",
+          cardTitle: "2 in DEV",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
     },
@@ -59,28 +44,19 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       card: [
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "First card DONE",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "1 DONE",
+          cardTitle: "1 DONE",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "Second card DONE",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "2 DONE",
+          cardTitle: "2 DONE",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          cardTitle: "Third card DONE",
-          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(
-            36
-          )
+          cardDescription: "3 DONE",
+          cardTitle: "3 DONE",
+          id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
     }
@@ -88,10 +64,10 @@ const state = {
 };
 
 io.on("connection", socket => {
-  io.emit('new state', state);
-  socket.on('new state', function(state){
-    console.log('here is update');
-    io.emit('new state', state);
+  io.emit("new state", state);
+  socket.on("new state", state => {
+    console.log("here is update");
+    io.emit("new state", state);
   });
 });
 const port = 8000;

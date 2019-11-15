@@ -4,7 +4,7 @@ import "./Board.css";
 import AddColumnForm from "./AddColumnForm";
 import AddCardForm from "./AddCardForm";
 import Dragula from "react-dragula";
-import io from 'socket.io-client';
+import io from "socket.io-client";
 // import { subscribeToTimer } from './server/api';
 
 State: type State = {
@@ -98,26 +98,22 @@ class Board extends React.Component<State> {
     //     ]
     //   }
     // ],
-
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.socket = io("http://localhost:8000");
-    this.socket.on('new state', state => {
+    this.socket.on("new state", state => {
+      console.log("state", state);
+
       if (JSON.stringify(state) !== JSON.stringify(this.state)) {
         this.setState({ ...state });
       }
     });
   }
 
-  componentDidUpdate () {
-    this.socket.emit('new state', this.state);
+  componentDidUpdate() {
+    this.socket.emit("new state", this.state);
   }
-
-  subscribeToTimer = (err, timestamp) =>
-    this.setState({
-      timestamp
-    });
 
   addColumn = colunmTitle => {
     this.setState(prevState => ({
@@ -150,7 +146,6 @@ class Board extends React.Component<State> {
     });
   };
   removeCard = (columnId, cardId) => {
-    this.setState({});
     this.state.boardColumn.map((item, index) => {
       if (item.id === columnId) {
         this.setState(prevState => {
@@ -170,24 +165,53 @@ class Board extends React.Component<State> {
       copySortSource: false,
       direction: "horizontal",
       isContainer: function(el) {
-        // console.log(el);
-
         return el.classList.contains("boardColumn-wrapper");
       }
-      // removeOnSpill: true
     };
     const arr = [];
     this.state.boardColumn.map(item => {
       arr.push(document.querySelector(`#${item.id}`));
     });
+    // Dragula(arr, options);
+    Dragula(arr, options).on("drop", (el, target, source, sibling) => {
+      console.log("el", el);
+      console.log("target", target);
+      console.log("source", source);
+      console.log("sibling", sibling);
+      const elId = el.getAttribute("id");
+      const targetId = target.getAttribute("id");
+      const sourseId = source.getAttribute("id");
 
-    Dragula(arr, options);
+      const sourceIndex = this.state.boardColumn.findIndex(
+        element => element.id === sourseId
+      );
+      const elIndex = this.state.boardColumn[sourceIndex].card.findIndex(
+        element => element.id === elId
+      );
+      const targetIndex = this.state.boardColumn.findIndex(
+        element => element.id === targetId
+      );
+      console.log("targetIndex", targetIndex);
+      this.setState(prevState => {
+        console.log(
+          "-------------------",
+          prevState.boardColumn[sourceIndex].card
+            .splice(elIndex, 1)
+            .concat(prevState.boardColumn[targetIndex].card)
+        );
+        prevState.boardColumn[sourceIndex].card
+          .splice(elIndex, 1)
+          .concat(prevState.boardColumn[targetIndex].card);
+      });
+      console.log("this.state", this.state.boardColumn);
+      // console.log("sourceIndex", sourceIndex);
+      // console.log("elIndex", elIndex);
+    });
   };
 
   render() {
-    console.log("STATE", this.state);
+    console.log("STATE", this.state.boardColumn);
     if (!this.state.boardColumn) return null;
-    // const boardColumn = ;
 
     return (
       <div className="board" id="boardId" ref={this.dragulaDecorator}>
@@ -208,7 +232,7 @@ class Board extends React.Component<State> {
 
               <div className={`boardColumn-wrapper`} id={`${list.id}`}>
                 {list.card.map(el => (
-                  <div className="card" key={el.id}>
+                  <div className="card" key={el.id} id={el.id}>
                     <p>Title: {el.cardTitle}</p>
                     <p>Description: {el.cardDescription}</p>
 
@@ -229,8 +253,6 @@ class Board extends React.Component<State> {
             </div>
           ))}
         </div>
-
-        <div className="time">{this.state.timestamp}</div>
       </div>
     );
   }
