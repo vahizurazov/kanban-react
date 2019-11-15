@@ -146,25 +146,12 @@ class Board extends React.Component<State> {
   };
   removeCard = (columnId, cardId) => {
     const { boardColumn } = this.state;
-    // find target column index
     const columnIndex = boardColumn.findIndex(el => el.id === columnId);
-    console.log("columnIndex", columnIndex);
-    // remove target card from target column
     const filteredCards = boardColumn[columnIndex].card.filter(
       el => el.id !== cardId
     );
-    console.log("filteredCards", filteredCards);
-
-    // creare new target column
     const updatedColumn = { ...boardColumn[columnIndex], card: filteredCards };
-
-    // remove target column from state
-    console.log("updatedColumn", updatedColumn);
-
     const filteredBoardColumn = boardColumn.filter(el => el.id !== columnId);
-    // add updated column to state
-    console.log("filteredBoardColumn", filteredBoardColumn);
-
     filteredBoardColumn.splice(columnIndex, 0, updatedColumn);
     this.setState({ boardColumn: filteredBoardColumn });
   };
@@ -183,12 +170,8 @@ class Board extends React.Component<State> {
     boardColumn.map(item => {
       arr.push(document.querySelector(`#${item.id}`));
     });
-    // Dragula(arr, options);
+    Dragula(arr, options);
     Dragula(arr, options).on("drop", (el, target, source, sibling) => {
-      // console.log("el", el);
-      // console.log("target", target);
-      // console.log("source", source);
-      // console.log("sibling", sibling);
       // const getId = getIdD => {
       //   getIdD.getAttribute("id");
       // };
@@ -207,28 +190,34 @@ class Board extends React.Component<State> {
       const targetIndex = boardColumn.findIndex(
         element => element.id === targetId
       );
-
       const filteredCards = boardColumn[sourceIndex].card.filter(
         el => el.id !== elId
       );
-      console.log("filteredCards", filteredCards);
+
       const updatedColumn = {
         ...boardColumn[sourceIndex],
         card: filteredCards
       };
+      // console.log("updatedColumnupdatedColumn", updatedColumn);
 
-      console.log("updatedColumn", updatedColumn);
-      const filteredBoardColumn = boardColumn.filter(el => el.id !== sourseId);
-      console.log("filteredBoardColumn", filteredBoardColumn);
+      // const filteredSourceColumn = boardColumn.filter(el => el.id !== targetId);
 
-      filteredBoardColumn.splice(sourceIndex, 0, updatedColumn);
+      // filteredSourceColumn.splice(sourceIndex, 0, updatedColumn);
 
-      // this.setState({ boardColumn: filteredBoardColumn });
-      // this.setState(prevState => {
-      //   //   prevState.boardColumn[sourceIndex].card: prevState.boardColumn[sourceIndex].card
-      //   //     .splice(elIndex, 1)
-      //   //     .concat(prevState.boardColumn[targetIndex].card)
-      // });
+      // this.setState({ boardColumn: filteredSourceColumn });
+
+      const findCard = boardColumn[sourceIndex].card.find(el => el.id === elId);
+
+      const updatedColumnTarget = {
+        ...boardColumn[targetIndex],
+        card: boardColumn[targetIndex].card.concat([findCard])
+      };
+
+      const filteredTargetColumn = boardColumn.filter(el => el.id !== targetId);
+
+      filteredTargetColumn.splice(targetIndex, 0, updatedColumnTarget);
+
+      this.setState({ boardColumn: filteredTargetColumn });
     });
   };
 
