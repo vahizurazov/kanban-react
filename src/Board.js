@@ -7,11 +7,11 @@ import Dragula from "react-dragula";
 import io from "socket.io-client";
 // import { subscribeToTimer } from './server/api';
 
-State: type State = {
-  boardColumn: any,
-  colunmTitle: string,
-  id: string
-};
+// State: type State = {
+//   boardColumn: any,
+//   colunmTitle: string,
+//   id: string
+// };
 class Board extends React.Component<State> {
   state = {
     // boardColumn: [
@@ -146,11 +146,14 @@ class Board extends React.Component<State> {
     });
   };
   removeCard = (columnId, cardId) => {
+    console.log(columnId);
+    console.log(cardId);
     this.state.boardColumn.map((item, index) => {
       if (item.id === columnId) {
         this.setState(prevState => {
           prevState.boardColumn[index].card.map((el, ind) => {
             if (el.id === cardId) {
+              console.log(prevState.boardColumn[index].card.splice(ind, 1));
               prevState.boardColumn[index].card.splice(ind, 1);
             }
           });
@@ -174,10 +177,10 @@ class Board extends React.Component<State> {
     });
     // Dragula(arr, options);
     Dragula(arr, options).on("drop", (el, target, source, sibling) => {
-      console.log("el", el);
-      console.log("target", target);
-      console.log("source", source);
-      console.log("sibling", sibling);
+      // console.log("el", el);
+      // console.log("target", target);
+      // console.log("source", source);
+      // console.log("sibling", sibling);
       const elId = el.getAttribute("id");
       const targetId = target.getAttribute("id");
       const sourseId = source.getAttribute("id");
@@ -193,15 +196,12 @@ class Board extends React.Component<State> {
       );
       console.log("targetIndex", targetIndex);
       this.setState(prevState => {
-        console.log(
-          "-------------------",
-          prevState.boardColumn[sourceIndex].card
-            .splice(elIndex, 1)
-            .concat(prevState.boardColumn[targetIndex].card)
-        );
-        prevState.boardColumn[sourceIndex].card
-          .splice(elIndex, 1)
-          .concat(prevState.boardColumn[targetIndex].card);
+        console.log("this.state BEFORE", this.state);
+        // return {
+        //   boardColumn: prevState.boardColumn[sourceIndex].card
+        //     .splice(elIndex, 1)
+        //     .concat(prevState.boardColumn[targetIndex].card)
+        // };
       });
       console.log("this.state", this.state.boardColumn);
       // console.log("sourceIndex", sourceIndex);
