@@ -148,18 +148,32 @@ class Board extends React.Component<State> {
   removeCard = (columnId, cardId) => {
     console.log(columnId);
     console.log(cardId);
-    this.state.boardColumn.map((item, index) => {
-      if (item.id === columnId) {
-        this.setState(prevState => {
-          prevState.boardColumn[index].card.map((el, ind) => {
-            if (el.id === cardId) {
-              console.log(prevState.boardColumn[index].card.splice(ind, 1));
-              prevState.boardColumn[index].card.splice(ind, 1);
-            }
-          });
-        });
-      }
-    });
+    const { boardColumn } = this.state;
+    // find target column index
+    const columnIndex = boardColumn.findIndex(el => el.id === columnId);
+    // remove target card from target column
+    const filteredCards = boardColumn[columnIndex].card.filter(el => el.id !== cardId);
+    // creare new target column
+    const updatedColumn = { ...boardColumn[columnIndex], card: filteredCards };
+    // remove terget column from state
+    const filteredBoardColumn = boardColumn.filter(el => el.id !== columnId);
+    // add updated column to state
+    filteredBoardColumn.splice(columnIndex, 0, updatedColumn);
+    this.setState({ boardColumn: filteredBoardColumn});
+
+
+    // this.state.boardColumn.map((item, index) => {
+    //   if (item.id === columnId) {
+    //     this.setState(prevState => {
+    //       prevState.boardColumn[index].card.map((el, ind) => {
+    //         if (el.id === cardId) {
+    //           console.log(prevState.boardColumn[index].card.splice(ind, 1));
+    //           prevState.boardColumn[index].card.splice(ind, 1);
+    //         }
+    //       });
+    //     });
+    //   }
+    // });
   };
 
   dragulaDecorator = () => {
