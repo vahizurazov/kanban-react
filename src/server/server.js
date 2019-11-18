@@ -72,6 +72,9 @@ io.on("connection", socket => {
     console.log("here is update");
     io.emit("new state", state);
   });
+  socket.on("disconnect", function() {
+    console.error("ERROR");
+  });
 });
 const port = 8000;
 io.listen(port);
