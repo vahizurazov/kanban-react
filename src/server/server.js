@@ -1,61 +1,61 @@
 const io = require("socket.io")();
 
 const state = {
-  boardColumn: [
+  lanes: [
     {
-      colunmTitle: "Backlog",
+      title: "Backlog",
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-      card: [
+      cards: [
         {
-          cardDescription: "111111111111111111",
-          cardTitle: "111111111111111111",
+          description: "111111111111111111",
+          title: "111111111111111111",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription: "222222222222222",
-          cardTitle: "222222222222222",
+          description: "222222222222222",
+          title: "222222222222222",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription: "33333333333333",
-          cardTitle: "33333333333333",
+          description: "33333333333333",
+          title: "33333333333333",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
     },
     {
-      colunmTitle: "In Dev",
+      title: "In Dev",
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-      card: [
+      cards: [
         {
-          cardDescription: "1 in DEV",
-          cardTitle: "1 in DEV",
+          description: "1 in DEV",
+          title: "1 in DEV",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription: "2 in DEV",
-          cardTitle: "2 in DEV",
+          description: "2 in DEV",
+          title: "2 in DEV",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
     },
     {
-      colunmTitle: "Done",
+      title: "Done",
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
-      card: [
+      cards: [
         {
-          cardDescription: "1 DONE",
-          cardTitle: "1 DONE",
+          description: "1 DONE",
+          title: "1 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription: "2 DONE",
-          cardTitle: "2 DONE",
+          description: "2 DONE",
+          title: "2 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          cardDescription: "3 DONE",
-          cardTitle: "3 DONE",
+          description: "3 DONE",
+          title: "3 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]

@@ -29,13 +29,13 @@
   text-align: center;
 }
 
-.boardColumn {
+.columns {
   display: flex;
   justify-content: space-around;
   padding: 0;
   margin: 0;
 }
-.wrapper-for-list {
+.wrapper-for-column {
   min-width: 200px;
   min-height: 300px;
   margin: 0 5px 5px;
@@ -43,13 +43,13 @@
 .wrap-title {
   position: relative;
 }
-.wrapper-for-list h4 {
+.wrapper-for-columnh4 {
   border-top: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
   margin-bottom: 0;
 }
-.boardColumn .boardColumn-wrapper {
+.columns .columns-wrapper {
   display: flex;
   flex-direction: column;
   border: 1px solid black;
