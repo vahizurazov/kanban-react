@@ -13,24 +13,22 @@ class App extends Component {
   componentDidMount() {
     this.socket = io("http://localhost:8000");
     this.socket.on("new state", state => {
-      console.log("stateDidMount", state);
+      // console.log("stateDidMount", state);
       if (JSON.stringify(state) !== JSON.stringify(this.state)) {
         this.setState({ ...state });
       }
     });
   }
 
-  componentDidUpdate() {
-    this.socket.emit("new state", this.state);
-  }
+  // componentDidUpdate() {
+  //   this.socket.emit("new state", this.state);
+  // }
 
   onDataChange = newState => {
-    console.log("newState", newState);
     this.socket.emit("new state", newState);
   };
 
   render() {
-    console.log("stateRender", this.state);
     const { lanes } = this.state;
 
     if (!lanes) return null;
@@ -41,8 +39,8 @@ class App extends Component {
           data={this.state}
           draggable
           editable
-          onCardAdd={e => e}
           onDataChange={this.onDataChange}
+          canAddLanes
         />
       </div>
     );

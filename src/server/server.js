@@ -1,5 +1,8 @@
 const io = require("socket.io")();
 
+const loremI =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
 const state = {
   lanes: [
     {
@@ -7,18 +10,18 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       cards: [
         {
-          description: "111111111111111111",
-          title: "111111111111111111",
+          description: loremI,
+          title: "First Backlog",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          description: "222222222222222",
-          title: "222222222222222",
+          description: loremI,
+          title: "Second Backlog",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          description: "33333333333333",
-          title: "33333333333333",
+          description: loremI,
+          title: "Third Backlog",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
       ]
@@ -28,12 +31,12 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       cards: [
         {
-          description: "1 in DEV",
+          description: loremI,
           title: "1 in DEV",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          description: "2 in DEV",
+          description: loremI,
           title: "2 in DEV",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
@@ -44,17 +47,17 @@ const state = {
       id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36),
       cards: [
         {
-          description: "1 DONE",
+          description: loremI,
           title: "1 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          description: "2 DONE",
+          description: loremI,
           title: "2 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         },
         {
-          description: "3 DONE",
+          description: loremI,
           title: "3 DONE",
           id: Math.floor(+new Date() + Math.random() * 0xffffffff).toString(36)
         }
